@@ -35,11 +35,18 @@ shinyServer(
             var1 <- data()[,input$var1]
             var2 <- data()[,input$var2]
             
-            t.test(var1, var2, 
-                   alternative = input$alternative, 
-                   paired = as.logical(input$paired),
-                   var.equal = as.logical(input$eqvar),
-                   conf.level = input$conflevel)
+            if(input$group)
+                t.test(var1 ~ var2,
+                       alternative = input$alternative, 
+                       paired = as.logical(input$paired),
+                       var.equal = as.logical(input$eqvar),
+                       conf.level = input$conflevel)
+            else
+                t.test(var1, var2, 
+                       alternative = input$alternative, 
+                       paired = as.logical(input$paired),
+                       var.equal = as.logical(input$eqvar),
+                       conf.level = input$conflevel)
         })
         
         output$plot <- renderPlot({
@@ -52,7 +59,10 @@ shinyServer(
             var1 <- data()[,input$var1]
             var2 <- data()[,input$var2]
 
-            boxplot(cbind(var1, var2))
+            if(input$group)
+                boxplot(var1 ~ var2)
+            else
+                boxplot(cbind(var1, var2))
         })
     }
 )

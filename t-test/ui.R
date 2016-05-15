@@ -4,7 +4,7 @@ shinyUI(pageWithSidebar(
         tabsetPanel(
             tabPanel('Load data',
                      fileInput('file1', 'Choose CSV File',
-                               accept=c('text/csv', 'text/comma-separated-values,text/plain', '.csv')),
+                               accept=c('text/csv', 'text/comma-separated-values, text/plain', '.csv')),
                      tags$hr(),
                      checkboxInput('header', 'Header', TRUE),
                      radioButtons('sep', 'Separator',
@@ -20,11 +20,15 @@ shinyUI(pageWithSidebar(
             ),
             tabPanel('Parameters',
                      selectInput("var1", 
-                                 label = "First variable",
+                                 label = "First variable (var1)",
                                  ""
                      ),
+                     radioButtons("group",
+                                  "Second variable as grouping factor",
+                                  choices = c("No" = "FALSE",
+                                              "Yes" = "TRUE")),
                      selectInput("var2", 
-                                 label = "Second variable",
+                                 label = "Second variable (var2)",
                                  ""
                      ),
                      radioButtons("paired",
